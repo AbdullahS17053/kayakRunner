@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6d197c32852443548987258aed172734
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 322068
+  packageName: Kayak Controller
+  packageVersion: 1.0.1
+  assetPath: Assets/RageRun Games/Kayak Controller/Animations/Forward Stroking.anim
+  uploadId: 768142

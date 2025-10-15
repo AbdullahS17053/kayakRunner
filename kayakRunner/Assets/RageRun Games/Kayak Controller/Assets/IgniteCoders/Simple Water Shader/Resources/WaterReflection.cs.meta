@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: dfbe97460f8acd1488a82178305cdf59
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 322068
+  packageName: Kayak Controller
+  packageVersion: 1.0.1
+  assetPath: Assets/RageRun Games/Kayak Controller/Assets/IgniteCoders/Simple Water
+    Shader/Resources/WaterReflection.cs
+  uploadId: 768142

@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 25c64722ab5441769cba48fd43fcb174
+timeCreated: 1748655483
+AssetOrigin:
+  serializedVersion: 1
+  productId: 322068
+  packageName: Kayak Controller
+  packageVersion: 1.0.1
+  assetPath: Assets/RageRun Games/Kayak Controller/Scripts/PaddleController.cs
+  uploadId: 768142

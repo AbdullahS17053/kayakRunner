@@ -1,0 +1,120 @@
+{
+    "name": "Kayak_Inputs",
+    "maps": [
+        {
+            "name": "KayakInputs",
+            "id": "5fd4f0fc-7d93-4b8f-bfd2-e84de5cb7e78",
+            "actions": [
+                {
+                    "name": "ForwardReversePaddling",
+                    "type": "PassThrough",
+                    "id": "4b6a7e26-eced-4735-93bf-9e1893684b86",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftRightDraw",
+                    "type": "PassThrough",
+                    "id": "fa723708-c614-4977-ba4f-9cf5aa6024ca",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Keyboard",
+                    "id": "d0ab0a3e-d17e-44a4-a305-c11b3fd4de8f",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ForwardReversePaddling",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "aa89d79a-eb6d-4bfc-9279-0c460d809f9b",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ForwardReversePaddling",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "735f3769-5517-4f65-b1bb-ee90101c188c",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ForwardReversePaddling",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "cf2eb6ec-345e-42a5-8619-76ee94b9d1ca",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ForwardReversePaddling",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "83daa2bb-5c28-489b-a485-528fb0c18b69",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ForwardReversePaddling",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Keyboard",
+                    "id": "5d9c3137-f00c-435d-8deb-3d3ea75ed9b7",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftRightDraw",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "44ef1a70-f8d2-4e4c-99f5-c3304b807eed",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftRightDraw",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "27568bf1-ff0a-4ed9-8f2b-0b01f02b01dc",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftRightDraw",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

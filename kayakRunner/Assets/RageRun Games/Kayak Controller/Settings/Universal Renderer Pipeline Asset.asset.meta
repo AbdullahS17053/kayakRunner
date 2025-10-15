@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: dae510f77ff01af48900350b730935be
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 322068
+  packageName: Kayak Controller
+  packageVersion: 1.0.1
+  assetPath: Assets/RageRun Games/Kayak Controller/Settings/Universal Renderer Pipeline
+    Asset.asset
+  uploadId: 768142

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ec07da72e923f0345af26dbbdad99afa
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 322068
+  packageName: Kayak Controller
+  packageVersion: 1.0.1
+  assetPath: Assets/RageRun Games/Kayak Controller/Animations/Idle - T Pose.anim
+  uploadId: 768142
