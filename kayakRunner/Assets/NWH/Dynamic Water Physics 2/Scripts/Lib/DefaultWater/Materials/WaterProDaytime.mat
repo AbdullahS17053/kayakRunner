@@ -68,6 +68,7 @@ Material:
     - _RefrColor: {r: 0.23624064, g: 0.48545027, b: 0.5283019, a: 1}
     - _RefractionTex_ST: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6

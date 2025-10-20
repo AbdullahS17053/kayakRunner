@@ -457,7 +457,6 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
-  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -465,6 +464,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,17 +575,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1 &677513047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,6 +1117,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1744807402 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6140010948655715733, guid: 7097ba7ba649e1f41bba232312bdcbd8, type: 3}
+  m_PrefabInstance: {fileID: 1873303153}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877996affa684b939f7230abe20cedb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1808031733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1295,6 +1312,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5496854577997237032, guid: 491fb54885e5c84488219af4ba6b7d35, type: 3}
   m_PrefabInstance: {fileID: 6145645937221959772}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &5792436675391729489 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 5465871561489725079, guid: 491fb54885e5c84488219af4ba6b7d35, type: 3}
+  m_PrefabInstance: {fileID: 6145645937221959772}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6145645937221959772
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1303,6 +1325,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4630632743706203353, guid: 491fb54885e5c84488219af4ba6b7d35, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 5792436675391729489}
+    - target: {fileID: 4630632743706203353, guid: 491fb54885e5c84488219af4ba6b7d35, type: 3}
+      propertyPath: waterSurface
+      value: 
+      objectReference: {fileID: 1744807402}
     - target: {fileID: 5496854577997237032, guid: 491fb54885e5c84488219af4ba6b7d35, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

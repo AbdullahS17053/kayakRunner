@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "Kayak_Inputs",
     "maps": [
         {
@@ -7,21 +8,21 @@
             "actions": [
                 {
                     "name": "ForwardReversePaddling",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "4b6a7e26-eced-4735-93bf-9e1893684b86",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "LeftRightDraw",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "fa723708-c614-4977-ba4f-9cf5aa6024ca",
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

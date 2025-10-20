@@ -11,7 +11,7 @@ namespace RageRunGames.KayakController
         WaterTrigger,
         AnimationEvent
     }
-    
+
     [RequireComponent(typeof(Rigidbody))]
     public class KayakController : MonoBehaviour
     {
@@ -19,12 +19,12 @@ namespace RageRunGames.KayakController
         [SerializeField] private ForceOn forceOn;
         [SerializeField] private bool useExternalPluginBuoyancyForces;
         [SerializeField] private bool useExternalPluginDragForces;
-        
+
         [Header("Water Force Settings")]
         [SerializeField] private bool enableWaterForceOnKayak;
         [SerializeField] private float waterForceMultiplier;
         [SerializeField] private Vector3 waterForceDirection;
-        
+
         [Header("Paddle Settings")] 
         [SerializeField] private Transform paddleParent;
 
@@ -43,7 +43,6 @@ namespace RageRunGames.KayakController
 
         [Header("Buoyancy Settings")] 
         [SerializeField] private Transform[] buoyancyPoints;
-
         [SerializeField] private KCWaterSurface waterSurface;
 
         [Header("Visual Leaning")] 
@@ -55,12 +54,15 @@ namespace RageRunGames.KayakController
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip[] audioClips;
 
+        [Header("Mobile / Auto Settings")]
+        [SerializeField] private bool alwaysMoveForward = false; // ✅ Added for continuous forward motion
+
         private Animator animator;
-        private Rigidbody rb;
+        [SerializeField] Rigidbody rb;
 
         private bool isLeftDrawStroking;
         private bool isRightDrawStroking;
-        
+
         private bool isLeftRudderStroking;
         private bool isRightRudderStroking;
 
@@ -73,22 +75,20 @@ namespace RageRunGames.KayakController
 
         public bool IsPaddleInWater { get; set; } = false;
         public ForceOn ForceOn => forceOn;
-        
+
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
         public InputActionAsset inputActionsAsset;
 
         private InputAction forwardReverseAction;
         private InputAction leftRightDrawAction;
 #endif
-        
-#if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 
-    private void Awake()
-    {
+#if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
+        private void Awake()
+        {
             if (inputActionsAsset == null)
             {
                 Debug.LogError("Missing the Input Action File");
-
                 return;
             }
 
@@ -106,16 +106,13 @@ namespace RageRunGames.KayakController
             if (leftRightDrawAction == null) Debug.LogError("'LeftRightDraw' action not found in 'KayakInputs' map.");
 
             kayakMap.Enable();
-            
-            
+
             rb = GetComponent<Rigidbody>();
             animator = GetComponentInChildren<Animator>();
             if (!waterSurface)
                 waterSurface = FindObjectOfType<KCWaterSurface>();
-    }
+        }
 #else
-    
-
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
@@ -140,14 +137,25 @@ namespace RageRunGames.KayakController
 
             isLeftDrawStroking = input < -0.1f;
             isRightDrawStroking = input > 0.1f;
-            
-            
 #else
             vertical = Input.GetAxisRaw("Vertical");
             horizontal = Input.GetAxisRaw("Horizontal");
+
+// ✅ Override input when UI buttons are pressed
+            if (turnLeftPressed)
+                horizontal = -1f;
+            else if (turnRightPressed)
+                horizontal = 1f;
+
             isLeftDrawStroking = Input.GetKey(KeyCode.Q);
             isRightDrawStroking = Input.GetKey(KeyCode.E);
 #endif
+            // ✅ Continuous forward motion override
+            if (alwaysMoveForward)
+            {
+                vertical = 1f; // simulate holding 'W' or forward paddle
+            }
+
             bool isForward = vertical > 0.1f;
             bool isReverse = vertical < -0.1f;
 
@@ -201,14 +209,13 @@ namespace RageRunGames.KayakController
             }
         }
 
-
         private void FixedUpdate()
         {
             if (!useExternalPluginBuoyancyForces)
             {
                 ApplyBuoyancy();
             }
-            
+
             ApplyWaterDrag();
             StabilizeKayak();
 
@@ -236,7 +243,6 @@ namespace RageRunGames.KayakController
 
             Quaternion targetRotation = Quaternion.Euler(0f, 0f, targetLeanAngle);
             visualModel.localRotation = Quaternion.Slerp(visualModel.localRotation, targetRotation, Time.deltaTime * leanSpeed);
-
 
             if (glideVelocity.magnitude > 0.01f)
             {
@@ -270,12 +276,24 @@ namespace RageRunGames.KayakController
                 drawStrokeAmount -= Time.fixedDeltaTime * 15f;
                 rb.AddForce(transform.right * drawStrokeAmount);
             }
+
+            // ✅ Continuous forward force if alwaysMoveForward is active
+            if (alwaysMoveForward && !isLeftDrawStroking && !isRightDrawStroking)
+            {
+                float targetSpeed = maxVelocity * 0.6f;
+                float currentSpeed = Vector3.Dot(rb.linearVelocity, transform.forward);
+                if (currentSpeed < targetSpeed)
+                {
+                    rb.AddForce(transform.forward * forwardStrokeForce * 0.05f, ForceMode.Force);
+                }
+
+            }
         }
 
         public void ApplyPaddleForce(Vector3 hitPoint, Vector3 paddleVelocity)
         {
             if (isRightDrawStroking || isLeftDrawStroking) return;
-            
+
             if (Mathf.Abs(vertical) > 0.1f && horizontal == 0f)
             {
                 Vector3 forwardPush = transform.forward * Mathf.Clamp(paddleVelocity.magnitude, 0, forwardStrokeForce) * vertical;
@@ -322,7 +340,6 @@ namespace RageRunGames.KayakController
             float submergedAmount = Mathf.Max(0f, waterSurface.SurfaceHeight - transform.position.y);
             rb.AddForce(Vector3.up * submergedAmount * 9.81f, ForceMode.Acceleration);
         }
-        
 
         public void AddWaterForce()
         {
@@ -332,7 +349,7 @@ namespace RageRunGames.KayakController
         private void ApplyWaterDrag()
         {
             if (useExternalPluginDragForces) return;
-            
+
             float speedFactor = rb.linearVelocity.magnitude;
             rb.linearDamping = dragInWater + speedFactor * 0.05f;
             rb.angularDamping = angularDragInWater + rb.angularVelocity.magnitude * 0.025f;
@@ -359,5 +376,30 @@ namespace RageRunGames.KayakController
             audioSource.volume = Random.Range(0.8f, 1f);
             audioSource.PlayOneShot(audioClips[Random.Range(0, audioClips.Length)]);
         }
+        // --- UI Button Methods for Mobile Steering ---
+        private bool turnLeftPressed = false;
+        private bool turnRightPressed = false;
+
+        public void OnLeftButtonDown()
+        {
+            turnLeftPressed = true;
+        }
+
+        public void OnLeftButtonUp()
+        {
+            turnLeftPressed = false;
+        }
+
+        public void OnRightButtonDown()
+        {
+            turnRightPressed = true;
+        }
+
+        public void OnRightButtonUp()
+        {
+            turnRightPressed = false;
+        }
+
     }
+    
 }
