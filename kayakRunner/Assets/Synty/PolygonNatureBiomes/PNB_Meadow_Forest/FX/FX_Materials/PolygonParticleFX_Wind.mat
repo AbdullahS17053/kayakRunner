@@ -28,6 +28,7 @@ Material:
   - ALWAYS
   - DepthOnly
   - SHADOWCASTER
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -114,6 +115,7 @@ Material:
     - _UVSec: 0
     - _Use_View_Edge_Compensation: 1
     - _ViewEdgePower: 1
+    - _XRMotionVectorsPass: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
@@ -127,6 +129,7 @@ Material:
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &3447561761089260127
 MonoBehaviour:
   m_ObjectHideFlags: 11
