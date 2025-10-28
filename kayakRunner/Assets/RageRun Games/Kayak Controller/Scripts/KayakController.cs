@@ -207,6 +207,13 @@ namespace RageRunGames.KayakController
             {
                 drawStrokeAmount = 0f;
             }
+            
+            UpdateAnimations();
+            
+#if UNITY_ANDROID || UNITY_IOS
+            UpdateTouchDrag();
+#endif
+
         }
 
         private void FixedUpdate()
@@ -399,7 +406,97 @@ namespace RageRunGames.KayakController
         {
             turnRightPressed = false;
         }
+        // --- Touch Drag Controls (for Mobile) ---
+        private Vector2 dragStartPos;
+        private bool isDragging = false;
+        private float dragThreshold = 50f; // Minimum pixels before considering it a drag
+        private int moveDirection = 0; // 1 = forward, -1 = reverse, 0 = idle
 
+        private void UpdateTouchDrag()
+        {
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+
+                switch (touch.phase)
+                {
+                    case TouchPhase.Began:
+                        dragStartPos = touch.position;
+                        isDragging = true;
+                        break;
+
+                    case TouchPhase.Moved:
+                        if (!isDragging) return;
+
+                        Vector2 dragDelta = touch.position - dragStartPos;
+
+                        // Vertical drag detection
+                        if (Mathf.Abs(dragDelta.y) > dragThreshold)
+                        {
+                            if (dragDelta.y > 0)
+                            {
+                                SetMoveDirection(1); // Forward
+                            }
+                            else
+                            {
+                                SetMoveDirection(-1); // Reverse
+                            }
+
+                            // Reset start position to avoid continuous triggering
+                            dragStartPos = touch.position;
+                        }
+
+                        break;
+
+                    case TouchPhase.Ended:
+                    case TouchPhase.Canceled:
+                        isDragging = false;
+                        break;
+                }
+            }
+
+            // 🔹 Continuous movement based on direction
+            if (moveDirection != 0)
+            {
+                MoveKayak(moveDirection);
+            }
+        }
+
+// --- Drag Response Methods ---
+        private void SetMoveDirection(int direction)
+        {
+            moveDirection = direction;
+        }
+
+        private void MoveKayak(int direction)
+        {
+            if (!isLeftDrawStroking && !isRightDrawStroking)
+            {
+                float targetSpeed = maxVelocity * 0.6f;
+                float currentSpeed = Vector3.Dot(rb.linearVelocity, transform.forward * direction);
+
+                if (currentSpeed < targetSpeed)
+                {
+                    rb.AddForce(transform.forward * direction * forwardStrokeForce * 0.05f, ForceMode.Force);
+                }
+            }
+        }
+
+        void UpdateAnimations()
+        {
+            if (moveDirection == 1)
+            {
+                Debug.Log("Moving Forward");
+                animator.SetBool("ForwardStroking", true);
+                animator.SetBool("ReverseStroking", false);
+            }
+            else if (moveDirection == -1)
+            {
+                Debug.Log("Moving Reverse");
+                animator.SetBool("ForwardStroking", false);
+                animator.SetBool("ReverseStroking", true);
+            }
+        }
     }
     
 }
