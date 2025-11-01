@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 using UnityEngine.InputSystem;
@@ -495,6 +497,15 @@ namespace RageRunGames.KayakController
                 Debug.Log("Moving Reverse");
                 animator.SetBool("ForwardStroking", false);
                 animator.SetBool("ReverseStroking", true);
+            }
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.tag=="Obstacle")
+            {
+                UIManager uiManager = FindAnyObjectByType<UIManager>();
+                uiManager.GameOver();
             }
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using RageRunGames.KayakController;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Button = UnityEngine.UI.Button;
@@ -7,6 +8,8 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private Button pauseBtn;
     [SerializeField] private GameObject pauseUI;
+    [SerializeField] private CanvasGroup levelLostUI;
+    [SerializeField] private GameObject lostPanel;
 
     public void Pause()
     {
@@ -39,5 +42,18 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
+    public void GameOver()
+    {
+        levelLostUI.gameObject.SetActive(true);
+        pauseBtn.gameObject.SetActive(false);
+        levelLostUI.LeanAlpha(1, 0.5f);
+        lostPanel.LeanMoveLocalY(0, 0.5f).setEaseOutExpo().delay = 0.1f;
+        Invoke(nameof(DisableKayak),0.5f);
+    }
+
+    void DisableKayak()
+    {
+        Time.timeScale = 0f;
     }
 }
