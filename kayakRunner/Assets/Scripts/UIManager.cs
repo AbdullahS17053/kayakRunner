@@ -10,16 +10,36 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseUI;
     [SerializeField] private CanvasGroup levelLostUI;
     [SerializeField] private GameObject lostPanel;
+    [SerializeField] private CanvasGroup quitUI;
+    [SerializeField] private GameObject quitPanel;
+    
+    [SerializeField] private bool isGame;
+
+    private void Awake()
+    {
+        if (isGame)
+        {
+            levelLostUI.alpha = 0f;
+            lostPanel.transform.localPosition = new Vector2(0, +Screen.height); 
+        }
+        else
+        {
+            quitUI.alpha = 0f;
+            quitPanel.transform.localPosition = new Vector2(0, +Screen.height); 
+        }
+    }
 
     public void Pause()
     {
+        AudioController.Instance.PlaySound("CLick");
         pauseUI.SetActive(true);
-        pauseBtn.gameObject.SetActive(false);
-        Time.timeScale = 0f;
+        Invoke(nameof(DisableKayak),0.5f);
+        //pauseBtn.gameObject.SetActive(false);
     }
     public void Resume()
     {
         Time.timeScale = 1f;
+        AudioController.Instance.PlaySound("Resume");
         pauseUI.SetActive(false);
         pauseBtn.gameObject.SetActive(true);
     }
@@ -41,12 +61,13 @@ public class UIManager : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1f;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void GameOver()
     {
+        AudioController.Instance.PlaySound("Lost");
         levelLostUI.gameObject.SetActive(true);
-        pauseBtn.gameObject.SetActive(false);
+        //pauseBtn.gameObject.SetActive(false);
         levelLostUI.LeanAlpha(1, 0.5f);
         lostPanel.LeanMoveLocalY(0, 0.5f).setEaseOutExpo().delay = 0.1f;
         Invoke(nameof(DisableKayak),0.5f);
@@ -54,6 +75,26 @@ public class UIManager : MonoBehaviour
 
     void DisableKayak()
     {
+        pauseBtn.gameObject.SetActive(false);
         Time.timeScale = 0f;
+    }
+    public void OpenQuitMenu()
+    {
+        AudioController.Instance.PlaySound("Click");
+        quitUI.gameObject.SetActive(true);
+        quitUI.LeanAlpha(1, 0.5f);
+        quitPanel.LeanMoveLocalY(0, 0.5f).setEaseOutExpo().delay = 0.1f;
+    }
+    public void CloseQuitMenu()
+    {
+        AudioController.Instance.PlaySound("Rseume");
+        quitUI.LeanAlpha(0, 0.5f);
+        quitPanel.LeanMoveLocalY(+Screen.height, 0.5f).setEaseInExpo();
+        Invoke(nameof(DisableQuitUI), 0.5f);
+    }
+
+    private void DisableQuitUI()
+    {
+        quitUI.gameObject.SetActive(false);
     }
 }

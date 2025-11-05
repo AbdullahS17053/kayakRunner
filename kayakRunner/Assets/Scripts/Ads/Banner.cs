@@ -8,10 +8,12 @@ public class Banner : MonoBehaviour
     public void Start()
     {
         // Initialize Google Mobile Ads SDK.
-        MobileAds.Initialize((InitializationStatus initStatus) =>
+        /*MobileAds.Initialize((InitializationStatus initStatus) =>
         {
             // This callback is called once the MobileAds SDK is initialized.
-        });
+        });*/
+        // Initialize AdMob only once in your project (move this if already done elsewhere)
+        MobileAds.Initialize(_ => { Debug.Log("AdMob initialized."); });
         RequestBanner();
     }
 
@@ -19,7 +21,7 @@ public class Banner : MonoBehaviour
     {
 
 #if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-2779022537358935~6745252229";
+        string adUnitId = "ca-app-pub-2779022537358935/7320144902";
 #elif UNITY_IPHONE
         string adUnitId = "ca-app-pub-2779022537358935/7320144902";
 #else

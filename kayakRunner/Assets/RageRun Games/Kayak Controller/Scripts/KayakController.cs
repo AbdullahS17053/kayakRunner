@@ -211,6 +211,41 @@ namespace RageRunGames.KayakController
             }
             
             UpdateAnimations();
+            /*
+#if UNITY_STANDALONE || UNITY_EDITOR
+            // --- PC Input Controls ---
+            if (Input.GetKey(KeyCode.W))
+            {
+                SetMoveDirection(1); // Forward
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                SetMoveDirection(-1); // Reverse
+            }
+            else
+            {
+                SetMoveDirection(0); // Stop when no key pressed
+            }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                OnLeftButtonDown();
+            }
+            else
+            {
+                OnLeftButtonUp();
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                OnRightButtonDown();
+            }
+            else
+            {
+                OnRightButtonUp();
+            }
+#endif
+*/
             
 #if UNITY_ANDROID || UNITY_IOS
             UpdateTouchDrag();

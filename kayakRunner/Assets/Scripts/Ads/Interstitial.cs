@@ -6,6 +6,8 @@ using System;
 public class Interstitial : MonoBehaviour
 {
     private InterstitialAd interstitialAd;
+    private bool adLoaded = false;
+    private bool adShown = false; // ✅ ensures ad shows only once
 
     void Start()
     {
@@ -14,13 +16,13 @@ public class Interstitial : MonoBehaviour
 
         // Load ad on start
         LoadInterstitialAd();
-        ShowInterstitialAd();
+        //ShowInterstitialAd();
     }
 
     public void LoadInterstitialAd()
     {
 #if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-2779022537358935~6745252229";
+        string adUnitId = "ca-app-pub-2779022537358935/7813408428";
 #elif UNITY_IPHONE
         string adUnitId = "ca-app-pub-2779022537358935/7813408428";
 #else
@@ -30,7 +32,8 @@ public class Interstitial : MonoBehaviour
         // Clean up old ad if any
         interstitialAd?.Destroy();
         interstitialAd = null;
-
+        adLoaded = false;
+        
         Debug.Log("Loading Interstitial Ad...");
 
         // Create an ad request
@@ -48,9 +51,16 @@ public class Interstitial : MonoBehaviour
 
                 Debug.Log("Interstitial loaded successfully.");
                 interstitialAd = ad;
+                adLoaded = true;
 
                 // Register events
                 RegisterEventHandlers(interstitialAd);
+                // ✅ Show ad automatically after it is loaded, but only once
+                if (!adShown)
+                {
+                    interstitialAd.Show();
+                    adShown = true;
+                }
             });
     }
 
@@ -79,6 +89,7 @@ public class Interstitial : MonoBehaviour
         {
             Debug.Log("Showing Interstitial Ad...");
             interstitialAd.Show();
+            adShown = true; // ✅ mark ad as shown
         }
         else
         {
