@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -74,9 +75,15 @@ namespace RageRunGames.KayakController
 
         private float vertical;
         private float horizontal;
-
+        
+        
         public bool IsPaddleInWater { get; set; } = false;
         public ForceOn ForceOn => forceOn;
+
+        public int health = 100;
+        // Store last hit time per obstacle so we can ignore repeated collisions
+        private float hitCooldown = 3f;
+        private Dictionary<GameObject, float> lastHitTimes = new Dictionary<GameObject, float>();
 
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
         public InputActionAsset inputActionsAsset;
@@ -537,10 +544,36 @@ namespace RageRunGames.KayakController
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.tag=="Obstacle")
+            GameObject obj = other.gameObject;
+            string tag = obj.tag;
+
+            // Check if recently collided with this object
+            if (lastHitTimes.ContainsKey(obj))
             {
+                float lastHit = lastHitTimes[obj];
+                if (Time.time - lastHit < hitCooldown)
+                    return; // Ignore repeated hit within cooldown
+            }
+
+            // Record this hit time
+            lastHitTimes[obj] = Time.time;
+
+            // Handle obstacle damage
+            int damage = 0;
+
+            if (tag == "SmallObstacle") damage = 10;
+            else if (tag == "MediumObstacle") damage = 20;
+            else if (tag == "LargeObstacle") damage = 30;
+
+            if (damage > 0)
+            {
+                health -= damage;
+                health = Mathf.Max(health, 0); // Prevent negative health
+
+                // Update UI
                 UIManager uiManager = FindAnyObjectByType<UIManager>();
-                uiManager.GameOver();
+                if (uiManager != null)
+                    uiManager.UpdateHealth();
             }
         }
     }

@@ -5,8 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Water
-  - Obstacle
   - SoundSlider
+  - SmallObstacle
+  - MediumObstacle
+  - LargeObstacle
   layers:
   - Default
   - TransparentFX

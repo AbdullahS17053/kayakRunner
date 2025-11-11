@@ -54,7 +54,7 @@ namespace RageRunGames.KayakController
             {
                 if (kayak.ForceOn != ForceOn.AnimationEvent)
                 {
-                    ApplyStrikeForce();
+                    //ApplyStrikeForce();
                 }
                 
                 kayak.IsPaddleInWater = false;

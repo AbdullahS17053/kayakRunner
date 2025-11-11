@@ -2,6 +2,7 @@ using System;
 using RageRunGames.KayakController;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
 
 public class UIManager : MonoBehaviour
@@ -12,8 +13,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject lostPanel;
     [SerializeField] private CanvasGroup quitUI;
     [SerializeField] private GameObject quitPanel;
+
+    [Header("References")] [SerializeField]
+    private Slider healthBar;
+
+    [SerializeField] private KayakController kayakController;
     
     [SerializeField] private bool isGame;
+    
+    
 
     private void Awake()
     {
@@ -27,6 +35,12 @@ public class UIManager : MonoBehaviour
             quitUI.alpha = 0f;
             quitPanel.transform.localPosition = new Vector2(0, +Screen.height); 
         }
+    }
+    private void Start()
+    {
+        // Initialize the health bar value
+        if (healthBar != null && kayakController != null)
+            healthBar.value = kayakController.health;
     }
 
     public void Pause()
@@ -96,5 +110,23 @@ public class UIManager : MonoBehaviour
     private void DisableQuitUI()
     {
         quitUI.gameObject.SetActive(false);
+    }
+
+    public void UpdateHealth()
+    {
+        if (healthBar != null && kayakController != null)
+        {
+            // Assuming the slider max value is set to 100 in Inspector
+            healthBar.value = kayakController.health;
+
+            // Optional: you can add color feedback or lose condition check
+            if (kayakController.health <= 0)
+            {
+                kayakController.health = 0;
+                // Handle player death or game over UI here
+                Debug.Log("Player is dead!");
+                GameOver();
+            }
+        }   
     }
 }
