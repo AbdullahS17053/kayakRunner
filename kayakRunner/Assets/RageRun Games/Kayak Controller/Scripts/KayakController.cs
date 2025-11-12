@@ -431,24 +431,49 @@ namespace RageRunGames.KayakController
         private bool turnLeftPressed = false;
         private bool turnRightPressed = false;
 
-        public void OnLeftButtonDown()
+        public void OnLeftUpButtonDown()
         {
+            SetMoveDirection(1);
             turnLeftPressed = true;
         }
 
-        public void OnLeftButtonUp()
+        public void OnLeftUpButtonUp()
         {
             turnLeftPressed = false;
+            SetMoveDirection(0);
         }
 
-        public void OnRightButtonDown()
+        public void OnLeftDownButtonDown()
         {
+            SetMoveDirection(-1);
+            turnLeftPressed = true;
+        }
+        public void OnLeftDownButtonUp()
+        {
+            turnLeftPressed = false;
+            SetMoveDirection(0);
+        }
+
+        public void OnRightUpButtonDown()
+        {
+            SetMoveDirection(1);
             turnRightPressed = true;
         }
 
-        public void OnRightButtonUp()
+        public void OnRightUpButtonUp()
         {
             turnRightPressed = false;
+            SetMoveDirection(0);
+        }
+        public void OnRightDownButtonDown()
+        {
+            SetMoveDirection(-1);
+            turnRightPressed = true;
+        }
+        public void OnRightDownButtonUp()
+        {
+            turnRightPressed = false;
+            SetMoveDirection(0);
         }
         // --- Touch Drag Controls (for Mobile) ---
         private Vector2 dragStartPos;
@@ -458,7 +483,7 @@ namespace RageRunGames.KayakController
 
         private void UpdateTouchDrag()
         {
-            if (Input.touchCount > 0)
+            /*if (Input.touchCount > 0)
             {
                 Touch touch = Input.GetTouch(0);
 
@@ -497,7 +522,7 @@ namespace RageRunGames.KayakController
                         isDragging = false;
                         break;
                 }
-            }
+            }*/
 
             // 🔹 Continuous movement based on direction
             if (moveDirection != 0)
