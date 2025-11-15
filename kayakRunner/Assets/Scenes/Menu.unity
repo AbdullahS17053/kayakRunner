@@ -1012,7 +1012,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00012207031, y: -0.00030517578}
+  m_AnchoredPosition: {x: 0, y: -0.00024414062}
   m_SizeDelta: {x: 640, y: 298.44}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &343050518
@@ -2818,7 +2818,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 71.601746, y: -219.91931}
+  m_AnchoredPosition: {x: 71.60156, y: -219.91919}
   m_SizeDelta: {x: 3273.2192, y: 1790.0408}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1075350066
@@ -3457,7 +3457,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: KAYAK RUNNER
+  m_text: KAYAK RIVER RUNNER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 607a42e3e90f14eecaf065ce4e7a9115, type: 2}
   m_sharedMaterial: {fileID: -3024823898696645451, guid: 607a42e3e90f14eecaf065ce4e7a9115, type: 2}
